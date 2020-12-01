@@ -12,8 +12,8 @@ To save your vacation, you need to get all fifty stars by December 25th.
 Collect stars by solving puzzles. Two puzzles will be made available on each day in the Advent calendar; the second
 puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
 
-Before you leave, the Elves in accounting just need you to fix your expense report (your puzzle input); apparently, s
-omething isn't quite adding up.
+Before you leave, the Elves in accounting just need you to fix your expense report (your puzzle input); apparently,
+something isn't quite adding up.
 
 Specifically, they need you to find the two entries that sum to 2020 and then multiply those two numbers together.
 
