@@ -27,14 +27,15 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ssh-key: ${{ secrets.SSH_KEY }}
-        
-      - name: 📅 Update day badge
-        id: day
-        # Make sure to update the path and the folder name regex so it works with your file structure.
-        run: |
-          day=$(find src/de/ungefroren/adventofcode/y2020 -maxdepth 1 -name "day*" | wc -l)
-          echo "Day: $day"
-          sed -i 's/day%20📅-[0-9]\+-blue/day%20📅-'"${day}"'-blue/' README.md
+
+# Don't update day badge for lua branch
+#      - name: 📅 Update day badge
+#        id: day
+#        # Make sure to update the path and the folder name regex so it works with your file structure.
+#        run: |
+#          day=$(find lua/y2020 -maxdepth 1 -name "day*" | wc -l)
+#          echo "Day: $day"
+#          sed -i 's/day%20📅-[0-9]\+-blue/day%20📅-'"${day}"'-blue/' README.md
           
       - name: ⭐ Update stars badge
         id: star
