@@ -55,4 +55,4 @@ jobs:
           git config --global user.name "Actions"
           git add .
           git diff-index --quiet HEAD || git commit --message "Update badges"
-          git push origin master
+          git push
