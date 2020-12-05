@@ -1,54 +1,24 @@
-# 🎄 Advent of Code Badges workflow 🎄 
-# ====================================
-# Author: joblo2213
-# License: MIT License (https://choosealicense.com/licenses/mit/) 
-#
-# This workflow updates the badges of your README.md after every push to the repository. 
-# The day badge is updated based on the number of files in your repository.
-# The stars badge increases it's value whenever u use a Star (⭐) in your commit message.
-# Add two  stars to a commit message to increase it by two stars.
-# If you for some reason mess it up you have to manually adjust the values in your readme file.
-#
-# 
-#
-# Make sure to add the following badges to your README.md:
-# ![Days completed](https://img.shields.io/badge/day%20📅-0-blue)
-# ![Stars](https://img.shields.io/badge/Stars%20⭐-0-yellow)
-# If you cahnge the color or the label of the badge you must also update the regexes used by the workflow.
-
 name: 🎄 Advent of Code Badges 🎄
-on: push
+on:
+  schedule:
+    - cron: '1 6 1-25 12 *'
+  workflow_dispatch:
+  push:
+    paths:
+      - '**/Day*.java' # only if a days source file was modified
 jobs:
   build:
     name: ⭐ Update badges 📅
     runs-on: ubuntu-latest
-    if: startsWith(github.repository, 'joblo2213') && !contains(github.event.head_commit.message, 'Update badges')
+    if: startsWith(github.repository, 'joblo2213') # don't run in forks
     steps:
       - uses: actions/checkout@v2
         with:
           ssh-key: ${{ secrets.SSH_KEY }}
-        
-      - name: 📅 Update day badge
-        id: day
-        # Make sure to update the path and the folder name regex so it works with your file structure.
-        run: |
-          day=$(find src/de/ungefroren/adventofcode/y2020 -maxdepth 1 -name "day*" | wc -l)
-          echo "Day: $day"
-          sed -i 's/day%20📅-[0-9]\+-blue/day%20📅-'"${day}"'-blue/' README.md
-          
-      - name: ⭐ Update stars badge
-        id: star
-        run: |
-          commit_message="${{ github.event.head_commit.message }}"
-          star="⭐"
-          oldstars=$(cat README.md | grep -o --perl-regexp '(?<=Stars%20⭐-)[0-9]+(?=-yellow)')
-          newstars=$(echo "${commit_message}" | awk -F "${star}" '{print NF-1}')
-          stars=$((oldstars + newstars))
-          echo "Old Stars: $oldstars"
-          echo "Added Stars: $newstars"
-          echo "Stars: $stars"
-          sed -i 's/Stars%20⭐-[0-9]\+-yellow/Stars%20⭐-'"${stars}"'-yellow/' README.md
-          
+      - uses: joblo2213/aoc-badges-action@v1
+        with:
+          userid: 658601
+          session: ${{ secrets.AOC_SESSION }}
       - name: 📤 Push
         run: |
           git config --global user.email "<>"
