@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -136,6 +137,16 @@ public class PuzzleInput implements Iterable<String> {
      */
     public <R> List<R> mapToList(Function<String, ? extends R> mapper) {
         return map(mapper).collect(Collectors.toList());
+    }
+
+    /**
+     * Split the PuzzleInput around places of the given regular expression, instead of the new line character
+     *
+     * @param regex regex at which the input should be split
+     * @return new Puzzle input split at regex
+     */
+    public PuzzleInput split(String regex) {
+        return new PuzzleInput(Arrays.asList(toString().split(regex)));
     }
 
     /**
