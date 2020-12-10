@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 public class Day10B {
 
+    private static final HashMap<Integer, Long> branches = new HashMap<>();
+
     /*
     How to:
 
@@ -22,7 +24,6 @@ public class Day10B {
      */
 
     public static void main(String[] args) throws IOException {
-        HashMap<Integer, Long> branches = new HashMap<>();
         List<Integer> ratings = PuzzleInput.of(Day10B.class).getInts().stream().sorted().collect(Collectors.toList());
         int series = 0;
         int previous = 0;
@@ -31,21 +32,22 @@ public class Day10B {
             if (i - previous == 1) {
                 series++;
             } else if (series != 0){
-                if (!branches.containsKey(series)) {
-                    branches.put(series, countBranches(0, series));
-                }
-                branches_total *= branches.get(series);
+                branches_total *= getAmountOfBranches(series);
                 series = 0;
             }
             previous = i;
         }
         if (series != 0){
-            if (!branches.containsKey(series)) {
-                branches.put(series, countBranches(0, series));
-            }
-            branches_total *= branches.get(series);
+            branches_total *= getAmountOfBranches(series);
         }
         System.out.println(branches_total);
+    }
+
+    private static long getAmountOfBranches(int steps) {
+        if (!branches.containsKey(steps)) {
+            branches.put(steps, countBranches(0, steps));
+        }
+        return branches.get(steps);
     }
 
     private static long countBranches(int value, int goal) {
