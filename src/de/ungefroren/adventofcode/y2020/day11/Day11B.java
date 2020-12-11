@@ -28,14 +28,9 @@ public class Day11B {
                     Sitable seat = input[row][sNr];
                     if (seat instanceof Floor) continue; //Floor never changes
 
-                    int sum = new Sightline.NORTH(sNr, row, input).inSight()
-                            + new Sightline.NORTHEAST(sNr, row, input).inSight()
-                            + new Sightline.EAST(sNr, row, input).inSight()
-                            + new Sightline.SOUTHEAST(sNr, row, input).inSight()
-                            + new Sightline.SOUTH(sNr, row, input).inSight()
-                            + new Sightline.SOUTHWEST(sNr, row, input).inSight()
-                            + new Sightline.WEST(sNr, row, input).inSight()
-                            + new Sightline.NORTHWEST(sNr, row, input).inSight();
+                    final int x = sNr, y = row;
+                    final Sitable[][] seats = input;
+                    int sum = (int) Arrays.stream(Sightline.values()).filter(s -> s.inSight(x, y, seats)).count();
 
                     if (seat.isOccupied() && sum >= 5) {
                         temp[row][sNr] = new Seat(false);
