@@ -1,7 +1,7 @@
 name: 🎄 Advent of Code Badges 🎄
 on:
   schedule:
-    - cron: '1 6 1-25 12 *'
+    - cron: '1 5 1-25 12 *'
   workflow_dispatch:
   push:
     paths:
