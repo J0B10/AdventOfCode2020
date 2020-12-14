@@ -22,13 +22,15 @@ public class Day13B {
 
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
         List<String> departures = Arrays.asList(PuzzleInput.of(Day13B.class).getLines().get(1).split(","));
+        int max = departures.stream().filter(s -> s.matches("\\d+")).mapToInt(Integer::parseInt).max().getAsInt();
+        int maxIndex = departures.indexOf(String.valueOf(max));
         int cores = Runtime.getRuntime().availableProcessors();
         ExecutorService executorService = Executors.newFixedThreadPool(cores);
-        long progress = START;
+        long progress = START / max;
         while (true) {
             final long start = progress;
             List<Future<OptionalLong>> workers = IntStream.range(0, cores).mapToObj(i -> executorService.submit(
-                    new Worker(start + i, start + i + WORKER_RANGE, cores, departures)
+                    new Worker(start + i, start + i + WORKER_RANGE, cores, departures, max, maxIndex)
             )).collect(Collectors.toList());
 
             List<Long> values = new ArrayList<>(cores);
@@ -38,7 +40,7 @@ public class Day13B {
             }
             if (values.isEmpty()) {
                 progress += cores + WORKER_RANGE - 1;
-                System.out.println("Current progress: " + progress);
+                System.out.println("Current progress: " + progress * max);
             } else {
                 System.out.println("==============================================");
                 System.out.println("          RESULT: " + values.stream().mapToLong(Long::longValue).min().getAsLong());
@@ -57,13 +59,13 @@ public class Day13B {
         private final int max;
         private final int maxIndex;
 
-        public Worker(long start, long end, int stepSize, List<String> departures) {
+        public Worker(long start, long end, int stepSize, List<String> departures, int max, int maxIndex) {
             this.start = start;
             this.end = end;
             this.stepSize = stepSize;
             this.departures = departures;
-            this.max = departures.stream().filter(s -> s.matches("\\d+")).mapToInt(Integer::parseInt).max().getAsInt();
-            this.maxIndex = departures.indexOf(String.valueOf(max));
+            this.max = max;
+            this.maxIndex = maxIndex;
         }
 
         @Override
