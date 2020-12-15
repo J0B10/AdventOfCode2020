@@ -3,6 +3,7 @@ package de.ungefroren.adventofcode.y2020.day14;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -72,20 +73,24 @@ public class Bitmask {
         long mask1s = (defined & values);
         value = value | mask1s;
         addresses.add(value);
-        Set<Long> xBits = new HashSet<>(LENGTH);
+        LinkedList<Long> xBits = new LinkedList<>();
         for (int i = 0; i < LENGTH; i++) {
             long bit = 1L << i;
             if ((defined & bit) == 0) xBits.add(bit);
         }
-        for (long xBit : xBits) {
-            for (long otherXBit : xBits) {
-                if (xBit == otherXBit) continue;
-                addresses.add((xBit | value) | otherXBit);
-                addresses.add((xBit | value) & ~otherXBit);
-                addresses.add(~xBit & (value | otherXBit));
-                addresses.add(~xBit & (value & ~otherXBit));
-            }
-        }
+        List<Long> values = applyXBit(xBits, new LinkedList<>(addresses));
+        addresses.addAll(values);
         return addresses;
+    }
+
+    private List<Long> applyXBit(LinkedList<Long> xBits, List<Long> values) {
+        if (xBits.isEmpty()) return values;
+        List<Long> out = new LinkedList<>(values);
+        long xBit = xBits.remove();
+        for (long l : values) {
+            out.add(l | xBit);
+            out.add(l & ~xBit);
+        }
+        return applyXBit(xBits, out);
     }
 }
