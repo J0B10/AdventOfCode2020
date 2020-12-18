@@ -19,7 +19,7 @@ public abstract class Tokenizer {
     private static Token tokenize(Token val1, Operator operator, String val2) {
         if (val2.isEmpty()) {
             if (operator != null && val1 != null) {
-                return new Operation(new Number(operator.getNeutralElement()), operator, val1);
+                return new Operation(val1, operator, new Number(operator.getNeutralElement()));
             } else {
                 return null;
             }
@@ -85,10 +85,7 @@ public abstract class Tokenizer {
     }
 
     public static void main(String[] args) {
-        System.out.println(tokenize("2 * 3 + (4 * 5)").resolve());
-        System.out.println(tokenize("5 + (8 * 3 + 9 + 3 * 4 * 3)").resolve());
-        System.out.println(tokenize("5 * 9 * (7 * 3 * 3 + 9 * 3 + (8 + 6 * 4))").resolve());
-        Token t = tokenize("((2 + 4 * 9) * (6 + 9 * 8 + 6) + 6) + 2 + 4 * 2");
+        Token t = tokenize("23 % 7");
         System.out.println(t.resolve());
     }
 }
