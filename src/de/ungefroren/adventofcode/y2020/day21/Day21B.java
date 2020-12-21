@@ -21,13 +21,11 @@ public class Day21B {
 
     public static void main(String[] args) throws IOException {
         //map containing possible ingredients for each allergen
-        List<String> allIngredients = new LinkedList<>();
         HashMap<String, Set<String>> allergens = new HashMap<>();
         for (String line : PuzzleInput.of(Day21B.class)) {
             Matcher match = REGEX.matcher(line);
             if (!match.matches()) throw new IllegalArgumentException();
             List<String> ingredientsList  = Arrays.asList(match.group("ingredients").split(" "));
-            allIngredients.addAll(ingredientsList);
             String[] allergensList = match.group("allergens").split(", ");
             for (String allergen : allergensList) {
                 if (allergens.containsKey(allergen)) {
