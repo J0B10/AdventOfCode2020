@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Day05B {
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public static void main(String[] args) throws IOException {
         Set<Integer> seats = PuzzleInput.of(Day05A.class).lines().map(Day05A::seatID).collect(Collectors.toSet());
         int j = IntStream.range(0,128 * 8)

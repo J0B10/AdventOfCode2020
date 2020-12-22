@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,11 +45,9 @@ public class Day21B {
                     .collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().toArray(new String[0])[0]));
             if (knownSize == known.size()) break; //no new known allergens found, abort
             knownSize = known.size();
-            known.forEach((allergen, ingredient) -> {
-                allergens.forEach((a, ingredients) -> {
-                    if (!a.equals(allergen)) ingredients.remove(ingredient);
-                });
-            });
+            known.forEach((allergen, ingredient) -> allergens.forEach((a, ingredients) -> {
+                if (!a.equals(allergen)) ingredients.remove(ingredient);
+            }));
         }
         String canonicalDangerousIngredientList = known.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())

@@ -3,7 +3,6 @@ package de.ungefroren.adventofcode.y2020.day18;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.regex.Matcher;
 
 public abstract class Operator {
 

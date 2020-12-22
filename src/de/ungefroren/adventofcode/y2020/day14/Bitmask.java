@@ -1,8 +1,6 @@
 package de.ungefroren.adventofcode.y2020.day14;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;

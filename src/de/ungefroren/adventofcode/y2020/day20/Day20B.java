@@ -4,7 +4,6 @@ import de.ungefroren.adventofcode.y2020.helpers.PuzzleInput;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,7 +16,6 @@ public class Day20B {
 
     public static void main(String[] args) throws IOException {
         List<Tile> tiles = PuzzleInput.of(Day20B.class).split("\\n\\n").map(Tile::parse).collect(Collectors.toList());
-        List<Tile> borders = tiles.stream().filter(t -> findMatchingTiles(t, tiles).size() == 3).collect(Collectors.toList());
         Tile start = findNWCorner(tiles);
         List<List<Tile>> lines = new ArrayList<>();
         List<Tile> line = new ArrayList<>();
@@ -42,7 +40,7 @@ public class Day20B {
             start = nxt;
         }
         Tile finaL = combine(lines);
-        int monsters = 0;
+        int monsters;
 
         //unmodified
         monsters = countMonsters(finaL);
@@ -143,6 +141,7 @@ public class Day20B {
         return i;
     }
 
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     public static long waterRoughness(Tile t) {
         int monsterLen = monster().size();
         long sum = 0;
@@ -168,41 +167,7 @@ public class Day20B {
         }
     }
 
-    public static List<Tile> findMatchingTiles(Tile t, List<Tile> all) {
-        List<Tile> matching = new ArrayList<>(4);
-        for (Tile other : all) {
-            if (other == t) continue;
-            //unmodified
-            if (t.matches(other) != null) matching.add(t);
-            //mirrored
-            Tile mir = other.flipHor();
-            if (t.matches(mir) != null) matching.add(mir);
-            //rotated 90°
-            Tile rot = other.rotate90();
-            if (t.matches(rot) != null) matching.add(rot);
-            //rotated 90° and mirrored
-            mir = rot.flipHor();
-            if (t.matches(mir) != null) matching.add(mir);
-            //rotated 180°
-            rot = rot.rotate90();
-            if (t.matches(rot) != null) matching.add(rot);
-            //rotated 180° and mirrored
-            mir = rot.flipHor();
-            if (t.matches(mir) != null) matching.add(mir);
-            //rotated 270°
-            rot = rot.rotate90();
-            if (t.matches(rot) != null) matching.add(rot);
-            //rotated 270° and mirrored
-            mir = rot.flipHor();
-            if (t.matches(mir) != null) matching.add(mir);
-            //no further checks needed as they are all covered by these 8
-            //see: https://stackoverflow.com/a/23550668
-        }
-        return matching;
-    }
-
     public static Tile findMatchingTile(Tile west, Tile north, List<Tile> all) {
-        List<Tile> matching = new ArrayList<>(4);
         for (Tile other : all) {
             //unmodified
             if ((west == null || west.matches(Direction.EAST, other))

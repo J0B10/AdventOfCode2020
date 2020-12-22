@@ -83,14 +83,11 @@ public class Assembler implements Runnable {
         }
     }
 
-    public int getPosition() {
-        return position;
-    }
-
     public int getAccumulator() {
         return accumulator;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean abortedAbnormally() {
         return error;
     }

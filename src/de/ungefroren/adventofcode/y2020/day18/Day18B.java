@@ -2,7 +2,6 @@ package de.ungefroren.adventofcode.y2020.day18;
 
 import de.ungefroren.adventofcode.y2020.day18.tokens.Token;
 import de.ungefroren.adventofcode.y2020.helpers.PuzzleInput;
-import de.ungefroren.adventofcode.y2020.helpers.Timer;
 
 import java.io.IOException;
 

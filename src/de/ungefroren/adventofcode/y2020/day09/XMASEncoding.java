@@ -1,7 +1,5 @@
 package de.ungefroren.adventofcode.y2020.day09;
 
-import de.ungefroren.adventofcode.y2020.helpers.PuzzleInput;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,6 +41,7 @@ public class XMASEncoding {
         preamble.clear();
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     public long findEncryptionWeakness(List<Long> inputs) {
         reset();
         long firstInvalid = -1;

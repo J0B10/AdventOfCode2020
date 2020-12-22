@@ -3,7 +3,7 @@ package de.ungefroren.adventofcode.y2020.day03;
 import de.ungefroren.adventofcode.y2020.helpers.PuzzleInput;
 
 public class TobogganMap {
-    private boolean[][] map;
+    private final boolean[][] map;
 
     public TobogganMap(boolean[][] map) {
         this.map = map;

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("DuplicatedCode")
 public class Day17A {
     public static void main(String[] args) throws IOException {
         HashMap<Coordinates, Boolean> states = new HashMap<>();

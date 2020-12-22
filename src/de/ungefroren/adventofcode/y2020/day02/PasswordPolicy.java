@@ -29,22 +29,6 @@ public class PasswordPolicy {
         return new PasswordPolicy(min, max, c, password);
     }
 
-    public int getMin() {
-        return min;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public char getLetter() {
-        return letter;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public boolean isValidOldPolicy() {
         long occurrences = password.chars().filter(c -> c == letter).count();
         return occurrences >= min && occurrences <= max;
