@@ -18,9 +18,11 @@ public class Day23B {
         for (int i = cups.size() + 1; i < 1000000; i++) cups.addLast(i);
         Game g = new Game(cups.stream().mapToInt(Integer::intValue).toArray());
         Timer t = new Timer().start();
-        for (int i = 0; i < 10000000; i++) g.move();
+        for (int i = 0; i < 10000000; i++) {
+            if (i % 100000 == 0) System.out.println("Progress: " +  i / 100000);
+            g.move();
+        }
         t.logElapsed();
-
         int i = g.indexOf(1);
         System.out.println((long) g.get(i + 1) * g.get(i + 2));
     }
